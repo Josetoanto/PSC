@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paneles Solares Chiapas | Energía Solar para tu Hogar y Negocio</title>
+<meta name="description" content="Instalamos paneles solares en Tuxtla Gutiérrez y Tapachula, Chiapas. Ahorra hasta 70% en tu recibo de luz. Cotización gratis." />
+<link rel="canonical" href="https://psc-self-nu.vercel.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Paneles Solares Chiapas" />
+<meta property="og:title" content="Paneles Solares Chiapas | Energía Solar para tu Hogar y Negocio" />
+<meta property="og:description" content="Instalamos paneles solares en Tuxtla Gutiérrez y Tapachula, Chiapas. Ahorra hasta 70% en tu recibo de luz. Cotización gratis." />
+<meta property="og:url" content="https://psc-self-nu.vercel.app/" />
+<meta property="og:locale" content="es_MX" />
+<meta name="twitter:card" content="summary_large_image" />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -124,6 +133,7 @@
   }
 
   .hero-tag .dot { width: 7px; height: 7px; background: var(--sun); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+  @media (max-width: 700px) { .hero-tag-city { display: none; } }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
 
   .hero-title {
@@ -169,6 +179,16 @@
     transition: all 0.25s;
   }
   .btn-secondary:hover { background: var(--sun); color: var(--dark); transform: translateY(-3px); }
+  @media (max-width: 700px) {
+    .hero-btns { flex-direction: column; gap: 12px; }
+    .hero-btns .btn-primary,
+    .hero-btns .btn-secondary {
+      justify-content: center;
+      font-size: 1.05rem;
+      padding: 15px 24px;
+      width: 100%;
+    }
+  }
 
   .hero-phone {
     margin-top: 32px;
@@ -218,19 +238,6 @@
     background: rgba(227,0,15,0.85);
     padding: 3px 8px; border-radius: 3px;
   }
-
-  /* stats bar */
-  .stats-bar {
-    background: var(--red);
-    padding: 20px 5%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    align-items: center;
-    gap: 12px;
-  }
-  .stat-item { text-align: center; }
-  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); line-height: 1; }
-  .stat-label { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
 
   /* ── SECTIONS common ── */
   section { padding: 90px 5%; }
@@ -288,17 +295,6 @@
     background: none; cursor: zoom-in;
   }
   .zoom-trigger:focus-visible { outline: 3px solid var(--sun); outline-offset: -3px; }
-  .product-img .placeholder-icon {
-    position: absolute; opacity: 0.15;
-    font-size: 5rem; color: var(--sun);
-  }
-  .product-badge {
-    position: absolute; top: 12px; right: 12px;
-    background: var(--red); color: var(--white);
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
-    padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
-    display: flex; align-items: center; gap: 5px;
-  }
 
   .product-body {
     padding: 22px;
@@ -420,17 +416,11 @@
     background: linear-gradient(transparent 50%, rgba(0,0,0,0.7) 100%);
     opacity: 0; transition: opacity 0.3s;
     display: flex; align-items: flex-end; padding: 20px;
+    pointer-events: none;
   }
+  .gallery-item .zoom-trigger { width: 100%; height: 100%; align-self: stretch; }
   .gallery-item:hover .gallery-overlay { opacity: 1; }
   .gallery-overlay span { font-size: 0.85rem; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.1em; }
-  .gallery-add-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 2px dashed rgba(255,184,0,0.4);
-    color: var(--sun); padding: 10px 20px; border-radius: 8px;
-    font-size: 0.88rem; font-weight: 600; text-decoration: none;
-    transition: all 0.25s;
-  }
-  .gallery-add-btn:hover { border-style: solid; background: rgba(255,184,0,0.07); }
 
   /* ── PROMO BANNER ── */
   #promo {
@@ -659,6 +649,7 @@
   @media (max-width: 860px) {
     nav ul { display: none; }
     .hamburger { display: flex; }
+    .nav-cta { display: none; }
   }
 
   #servicios { background: var(--dark); }
@@ -726,7 +717,7 @@
   </svg>
 
   <div class="hero-content">
-    <div class="hero-tag"><div class="dot"></div> Tuxtla Gutiérrez, Chiapas</div>
+    <div class="hero-tag"><div class="dot"></div><span class="hero-tag-city">Tuxtla Gutiérrez, </span>Chiapas</div>
     <h1 class="hero-title">
       DEJA DE <span class="red-word">PAGAR</span> DE MÁS<br>
       EN TU <span class="accent">LUZ</span>
@@ -810,22 +801,7 @@
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  
-  <div class="stat-item">
-    <div class="stat-num">10+</div>
-    <div class="stat-label">Años de experiencia</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">90%</div>
-    <div class="stat-label">Ahorro en tu recibo</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">2</div>
-    <div class="stat-label">Sucursales</div>
-  </div>
-</div>
+
 
 <!-- PROMO BANNER -->
 <div id="promo">
@@ -851,7 +827,7 @@
     <div class="product-card reveal">
       <div class="product-img">
         <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Paneles solares"><img src="assets/paneles.webp" alt="Paneles solares instalados" loading="lazy" /></button>
-        <div class="product-badge"><i class="fa-solid fa-star"></i> Popular</div>
+        
       </div>
       <div class="product-body">
         <div class="product-name">Paneles Solares</div>
@@ -920,7 +896,7 @@
     <div class="product-card reveal">
       <div class="product-img">
         <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Sistema solar autónomo"><img src="assets/sistemasolarautonomo.webp" alt="Sistema solar autónomo con baterías" loading="lazy" /></button>
-        <div class="product-badge"><i class="fa-solid fa-tag"></i> Nuevo</div>
+        
       </div>
       <div class="product-body">
         <div class="product-name">Sistema Autónomo</div>
@@ -1018,7 +994,6 @@
       <h2 class="section-title">NUESTROS <span class="accent">TRABAJOS</span></h2>
       <div class="section-divider"></div>
     </div>
-    <a href="#contacto" class="gallery-add-btn"><i class="fa-solid fa-plus"></i> Agregar tus fotos</a>
   </div>
 
   <div class="gallery-grid reveal">
@@ -1129,7 +1104,7 @@
         <div class="contact-item-icon"><i class="fa-solid fa-globe"></i></div>
         <div>
           <h4>Sitio Web</h4>
-          <a href="https://www.panelessolareschiapas.com" target="_blank">www.panelessolareschiapas.com</a>
+          <a href="https://psc-self-nu.vercel.app" target="_blank">psc-self-nu.vercel.app</a>
         </div>
       </div>
       <div class="contact-item reveal">
@@ -1206,7 +1181,7 @@
         <li><a href="tel:9611837155"><i class="fa-solid fa-phone fa-fw"></i> Tuxtla: (961) 183 71 55</a></li>
         <li><a href="tel:9621260269"><i class="fa-solid fa-phone fa-fw"></i> Tapachula: (962) 126 02 69</a></li>
         <li><a href="https://wa.me/529611837155"><i class="fa-brands fa-whatsapp fa-fw"></i> WhatsApp</a></li>
-        <li><a href="https://www.panelessolareschiapas.com" target="_blank"><i class="fa-solid fa-globe fa-fw"></i> panelessolareschiapas.com</a></li>
+        <li><a href="https://psc-self-nu.vercel.app" target="_blank"><i class="fa-solid fa-globe fa-fw"></i> psc-self-nu.vercel.app</a></li>
       </ul>
     </div>
   </div>
@@ -1280,27 +1255,6 @@
   lbClose.addEventListener('click', () => lb.close());
   lb.addEventListener('click', e => {
     if (e.target === lb) lb.close();
-  });
-
-  // Stats animation
-  document.addEventListener('DOMContentLoaded', () => {
-    const statNums = document.querySelectorAll('.stat-num');
-    const statsBar = document.querySelector('.stats-bar');
-    const statsObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        statNums.forEach(el => {
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(10px)';
-          el.style.transition = 'all 0.5s';
-          setTimeout(() => {
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-          }, 200);
-        });
-        statsObserver.unobserve(statsBar);
-      }
-    }, { threshold: 0.5 });
-    statsObserver.observe(statsBar);
   });
 </script>
 </body>
