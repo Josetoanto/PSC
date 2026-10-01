@@ -274,13 +274,18 @@
   }
 
   .product-img {
-    height: 200px;
+    height: 240px;
     background: linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
     display: flex; align-items: center; justify-content: center;
     position: relative;
     overflow: hidden;
   }
   .product-img img { width: 100%; height: 100%; object-fit: cover; }
+  .zoom-trigger {
+    display: block; width: 100%; height: 100%; padding: 0; border: 0;
+    background: none; cursor: zoom-in;
+  }
+  .zoom-trigger:focus-visible { outline: 3px solid var(--sun); outline-offset: -3px; }
   .product-img .placeholder-icon {
     position: absolute; opacity: 0.15;
     font-size: 5rem; color: var(--sun);
@@ -376,7 +381,7 @@
     border: 2px solid rgba(255,184,0,0.2);
   }
   .why-visual img { width: 100%; height: 100%; object-fit: cover; }
-  .why-visual .photo-placeholder { font-size: 6rem; opacity: 0.15; position: absolute; color: var(--sun); }
+  .why-visual .zoom-trigger { display: block; }
   .why-overlay {
     position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,0.85));
@@ -407,7 +412,6 @@
   }
   .gallery-item:hover { border-color: rgba(255,184,0,0.5); transform: scale(1.02); }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-  .gallery-item .g-icon { font-size: 3.5rem; opacity: 0.15; position: absolute; color: var(--sun); }
   .gallery-item:first-child { grid-row: span 2; }
   .gallery-item .gallery-overlay {
     position: absolute; inset: 0;
@@ -478,6 +482,7 @@
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px; padding: 28px;
     transition: all 0.3s;
+    display: flex; flex-direction: column;
   }
   .test-card:hover {
     border-color: rgba(255,184,0,0.3);
@@ -485,14 +490,16 @@
     transform: translateY(-4px);
   }
   .test-stars { color: var(--sun); font-size: 1.1rem; margin-bottom: 14px; }
-  .test-text { font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
-  .test-author { display: flex; align-items: center; gap: 12px; }
+  .test-text { font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 20px; font-style: italic; flex: 1; }
+  .test-author { display: flex; align-items: center; gap: 12px; margin-top: auto; }
   .test-avatar {
     width: 44px; height: 44px; border-radius: 50%;
     background: linear-gradient(135deg, var(--blue-light), var(--blue-deep));
     display: flex; align-items: center; justify-content: center;
     font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--white);
+    overflow: hidden; flex-shrink: 0;
   }
+  .test-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .test-name { font-weight: 700; font-size: 0.95rem; }
   .test-loc { font-size: 0.8rem; color: var(--gray); }
 
@@ -654,14 +661,28 @@
 
   #servicios { background: var(--dark); }
 
-  /* Placeholder icon box in gallery/product */
-  .placeholder-box {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 8px; color: rgba(255,184,0,0.3);
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    border: 0; padding: 24px; background: transparent;
+    max-width: none; max-height: none;
+    inset: 0; width: 100vw; height: 100vh;
+    box-sizing: border-box; overflow: visible;
   }
-  .placeholder-box .fa-camera { font-size: 2.4rem; }
-  .placeholder-box span { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  #lightbox[open] { display: flex; align-items: center; justify-content: center; }
+  #lightbox:not([open]) { display: none; }
+  #lightbox::backdrop { background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); }
+  .lightbox-frame { position: relative; display: flex; max-width: 100%; max-height: 100%; }
+  #lightbox-img {
+    display: block; max-width: 92vw; max-height: 88vh;
+    width: auto; height: auto; border-radius: 12px;
+  }
+  #lightbox-close {
+    position: absolute; top: -12px; right: -12px;
+    width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: var(--red); color: var(--white); font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
 </style>
 </head>
 <body>
@@ -670,7 +691,7 @@
 <nav>
   <div class="logo">
     <div class="logo-icon">
-      <img src="icono.png" alt="Logo" />
+      <img src="icono.webp" alt="Logo" />
     </div>
     <div class="logo-text">PANELES SOLARES<br><span>CHIAPAS</span></div>
   </div>
@@ -830,11 +851,7 @@
 
     <div class="product-card reveal">
       <div class="product-img">
-        <div class="placeholder-icon"><i class="fa-solid fa-solar-panel"></i></div>
-        <div class="placeholder-box">
-          <i class="fa-solid fa-camera"></i>
-          <span>Agregar foto del producto</span>
-        </div>
+        <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Paneles solares"><img src="assets/paneles.webp" alt="Paneles solares instalados" loading="lazy" /></button>
         <div class="product-badge"><i class="fa-solid fa-star"></i> Popular</div>
       </div>
       <div class="product-body">
@@ -852,11 +869,7 @@
 
     <div class="product-card reveal">
       <div class="product-img">
-        <div class="placeholder-icon"><i class="fa-solid fa-droplet"></i></div>
-        <div class="placeholder-box">
-          <i class="fa-solid fa-camera"></i>
-          <span>Agregar foto del producto</span>
-        </div>
+        <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Bomba de agua solar"><img src="assets/bombadeagua.webp" alt="Bomba de agua solar" loading="lazy" /></button>
       </div>
       <div class="product-body">
         <div class="product-name">Bomba de Agua Solar</div>
@@ -873,11 +886,7 @@
 
     <div class="product-card reveal">
       <div class="product-img">
-        <div class="placeholder-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-        <div class="placeholder-box">
-          <i class="fa-solid fa-camera"></i>
-          <span>Agregar foto del producto</span>
-        </div>
+        <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Calentador solar"><img src="assets/calentadorsolar.webp" alt="Calentador solar" loading="lazy" /></button>
       </div>
       <div class="product-body">
         <div class="product-name">Calentador Solar</div>
@@ -894,11 +903,7 @@
 
     <div class="product-card reveal">
       <div class="product-img">
-        <div class="placeholder-icon"><i class="fa-solid fa-lightbulb"></i></div>
-        <div class="placeholder-box">
-          <i class="fa-solid fa-camera"></i>
-          <span>Agregar foto del producto</span>
-        </div>
+        <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Luminaria solar"><img src="assets/luminariasolar.webp" alt="Luminaria solar" loading="lazy" /></button>
       </div>
       <div class="product-body">
         <div class="product-name">Luminaria Solar</div>
@@ -915,11 +920,7 @@
 
     <div class="product-card reveal">
       <div class="product-img">
-        <div class="placeholder-icon"><i class="fa-solid fa-battery-full"></i></div>
-        <div class="placeholder-box">
-          <i class="fa-solid fa-camera"></i>
-          <span>Agregar foto del producto</span>
-        </div>
+        <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Sistema solar autónomo"><img src="assets/sistemasolarautonomo.webp" alt="Sistema solar autónomo con baterías" loading="lazy" /></button>
         <div class="product-badge"><i class="fa-solid fa-tag"></i> Nuevo</div>
       </div>
       <div class="product-body">
@@ -999,11 +1000,7 @@
     </div>
 
     <div class="why-visual reveal">
-      <div class="photo-placeholder"><i class="fa-solid fa-hard-hat"></i></div>
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:3.5rem;"></i>
-        <div style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;text-align:center;">Agregar imagen<br>del equipo o instalación</div>
-      </div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Caso de éxito"><img src="assets/casodeexito.webp" alt="Caso de éxito: instalación solar realizada por nuestro equipo" loading="lazy" /></button>
       <div class="why-overlay">
         <div>
           <h3>Instaladores Certificados</h3>
@@ -1027,40 +1024,24 @@
 
   <div class="gallery-grid reveal">
     <div class="gallery-item">
-      <div class="g-icon"><i class="fa-solid fa-house"></i></div>
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:2.5rem;"></i>
-        <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;">Foto Principal</div>
-      </div>
-      <div class="gallery-overlay"><span>Instalación Residencial</span></div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Trabajo 1"><img src="assets/trabajo1.webp" alt="Instalación solar realizada" loading="lazy" /></button>
+      <div class="gallery-overlay"><span>Trabajo 1</span></div>
     </div>
     <div class="gallery-item">
-      <div class="g-icon"><i class="fa-solid fa-sun"></i></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:2rem;"></i>
-      </div>
-      <div class="gallery-overlay"><span>Comercial</span></div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Trabajo 2"><img src="assets/trabajo2.webp" alt="Instalación solar realizada" loading="lazy" /></button>
+      <div class="gallery-overlay"><span>Trabajo 2</span></div>
     </div>
     <div class="gallery-item">
-      <div class="g-icon"><i class="fa-solid fa-water"></i></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:2rem;"></i>
-      </div>
-      <div class="gallery-overlay"><span>Bomba Solar</span></div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Trabajo 3"><img src="assets/trabajo3.webp" alt="Instalación solar realizada" loading="lazy" /></button>
+      <div class="gallery-overlay"><span>Trabajo 3</span></div>
     </div>
     <div class="gallery-item">
-      <div class="g-icon"><i class="fa-solid fa-battery-full"></i></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:2rem;"></i>
-      </div>
-      <div class="gallery-overlay"><span>Sistema Autónomo</span></div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Trabajo 4"><img src="assets/trabajo4.webp" alt="Instalación solar realizada" loading="lazy" /></button>
+      <div class="gallery-overlay"><span>Trabajo 4</span></div>
     </div>
     <div class="gallery-item">
-      <div class="g-icon"><i class="fa-solid fa-lightbulb"></i></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,184,0,0.3);">
-        <i class="fa-solid fa-camera" style="font-size:2rem;"></i>
-      </div>
-      <div class="gallery-overlay"><span>Luminaria</span></div>
+      <button class="zoom-trigger" type="button" aria-label="Ampliar imagen: Trabajo 5"><img src="assets/trabajo5.webp" alt="Instalación solar realizada" loading="lazy" /></button>
+      <div class="gallery-overlay"><span>Trabajo 5</span></div>
     </div>
   </div>
 </section>
@@ -1078,12 +1059,11 @@
       <div class="test-stars">
         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
       </div>
-      <p class="test-text">"Instalaron 4 paneles en mi casa y en el primer mes ya noté la diferencia. Mi recibo bajó más del 60%. Excelente servicio y muy profesionales."</p>
+      <p class="test-text">"Buena atención, seguimiento y productos. Tienen paneles de mayor capacidad que otros proveedores y con precio menor. Recomendado."</p>
       <div class="test-author">
-        <div class="test-avatar">MR</div>
+        <div class="test-avatar">M</div>
         <div>
-          <div class="test-name">Manuel Rodríguez</div>
-          <div class="test-loc">Tuxtla Gutiérrez, Chis.</div>
+          <div class="test-name">Miguel</div>
         </div>
       </div>
     </div>
@@ -1091,12 +1071,11 @@
       <div class="test-stars">
         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
       </div>
-      <p class="test-text">"Instalé la bomba de agua solar para mi rancho. Ya no pago electricidad para el riego. Fue la mejor inversión que hice. Los recomiendo 100%."</p>
+      <p class="test-text">"Muy buena atención, excelente servicio, la mejor opción para comprar paneles solares y ahorrar energía eléctrica."</p>
       <div class="test-author">
-        <div class="test-avatar">JL</div>
+        <div class="test-avatar">MP</div>
         <div>
-          <div class="test-name">José López</div>
-          <div class="test-loc">Chiapa de Corzo, Chis.</div>
+          <div class="test-name">María A. Polo</div>
         </div>
       </div>
     </div>
@@ -1104,12 +1083,11 @@
       <div class="test-stars">
         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
       </div>
-      <p class="test-text">"Para mi restaurante fue fundamental. Ya no tenemos los apagones de siempre y el ahorro en luz nos ayuda mucho cada mes. ¡Gracias Paneles Solares Chiapas!"</p>
+      <p class="test-text">"Excelente sitio para invertir en un sistema fotovoltaico y reducir tu factura de luz eléctrica, además de tener personal realmente capacitado y disponibilidad para responder todas nuestras dudas."</p>
       <div class="test-author">
-        <div class="test-avatar">AG</div>
+        <div class="test-avatar">JR</div>
         <div>
-          <div class="test-name">Ana Gutiérrez</div>
-          <div class="test-loc">Tapachula, Chis.</div>
+          <div class="test-name">Jessica Jazmín Reyes Segundo</div>
         </div>
       </div>
     </div>
@@ -1251,6 +1229,14 @@
   </a>
 </div>
 
+<!-- LIGHTBOX -->
+<dialog id="lightbox" aria-label="Imagen ampliada">
+  <div class="lightbox-frame">
+    <button id="lightbox-close" type="button" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+</dialog>
+
 <script>
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
@@ -1278,6 +1264,24 @@
       e.target.reset();
     }, 4000);
   }
+
+  // Lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const lbClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.zoom-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.showModal();
+    });
+  });
+  lbClose.addEventListener('click', () => lb.close());
+  lb.addEventListener('click', e => {
+    if (e.target === lb) lb.close();
+  });
 
   // Stats animation
   document.addEventListener('DOMContentLoaded', () => {
