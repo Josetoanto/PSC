@@ -528,8 +528,6 @@
   .contact-item a:hover { color: var(--sun); }
 
   .contact-form { display: flex; flex-direction: column; gap: 16px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
 
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group label { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); font-weight: 600; }
@@ -1079,19 +1077,9 @@
 
   <div class="contact-grid">
     <form class="contact-form reveal" action="https://wa.me/529611837155" method="get" onsubmit="handleForm(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
-        </div>
-        <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="961 000 0000" required>
-        </div>
-      </div>
       <div class="form-group">
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
       </div>
       <div class="form-group">
         <label for="producto">Producto de interés</label>
@@ -1236,8 +1224,6 @@
       'Hola, me interesa cotizar paneles solares.',
       '',
       `Nombre: ${val('nombre')}`,
-      `Teléfono: ${val('telefono')}`,
-      val('correo')   && `Correo: ${val('correo')}`,
       val('producto') && `Producto: ${val('producto')}`,
       val('mensaje')  && `\nMensaje: ${val('mensaje')}`,
     ].filter(Boolean).join('\n');
