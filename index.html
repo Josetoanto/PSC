@@ -222,12 +222,14 @@
   /* stats bar */
   .stats-bar {
     background: var(--red);
-    padding: 28px 5%;
-    display: flex; justify-content: center; gap: 60px;
-    flex-wrap: wrap;
+    padding: 20px 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    align-items: center;
+    gap: 12px;
   }
   .stat-item { text-align: center; }
-  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--white); line-height: 1; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); line-height: 1; }
   .stat-label { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
 
   /* ── SECTIONS common ── */
@@ -810,16 +812,13 @@
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">+500</div>
-    <div class="stat-label">Instalaciones</div>
-  </div>
+  
   <div class="stat-item">
     <div class="stat-num">10+</div>
     <div class="stat-label">Años de experiencia</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">70%</div>
+    <div class="stat-num">90%</div>
     <div class="stat-label">Ahorro en tu recibo</div>
   </div>
   <div class="stat-item">
@@ -831,7 +830,7 @@
 <!-- PROMO BANNER -->
 <div id="promo">
   <div class="promo-inner reveal">
-    <div class="big-num">4</div>
+    <div class="big-num">500+</div>
     <div class="promo-label">Paneles Solares Instalados</div>
     <p>¡A un <strong>SUPER PRECIO</strong> para hogar y comercio! Oferta por tiempo limitado. ¡No dejes pasar esta oportunidad!</p>
     <a href="tel:9611837155" class="promo-btn"><i class="fa-solid fa-phone-volume"></i> COTIZAR AHORA — 961 183 7155</a>
