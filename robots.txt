@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paneles-solares-psc.vercel.app/sitemap.xml
